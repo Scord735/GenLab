@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenLab | Генетическая экспертиза</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF6B35;
+            --secondary: #F7C59F;
+            --dark: #292929;
+            --light: #F5F5F5;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #FF8C42 100%);
+            color: white;
+            padding: 1.5rem 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            animation: fadeInDown 1s;
+        }
+        .logo span {
+            color: var(--secondary);
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        .nav-links li {
+            margin-left: 2.5rem;
+            position: relative;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background: var(--secondary);
+            bottom: -8px;
+            left: 0;
+            transition: width 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: url('https://avatars.mds.yandex.net/get-altay/5332072/2a0000017b1f1c3f3e3f3e3f3f3f3f3f3f3f/XXL') center/cover no-repeat;
+            position: relative;
+            color: white;
+            text-align: left;
+            padding-top: 80px;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(41, 41, 41, 0.7);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            animation: fadeInUp 1.5s;
+        }
+        .hero h1 {
+            font-size: 3.8rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .hero h1 span {
+            color: var(--primary);
+        }
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.4s ease;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+            border: 2px solid transparent;
+        }
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.5);
+            background: transparent;
+            border-color: var(--primary);
+        }
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid white;
+            margin-left: 1rem;
+        }
+        .btn-secondary:hover {
+            background: white;
+            color: var(--dark);
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+        .section-title h2 {
+            font-size: 2.8rem;
+            color: var(--primary);
+            display: inline-block;
+            position: relative;
+        }
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 70%;
+            height: 4px;
+            background: var(--secondary);
+            bottom: -15px;
+            left: 15%;
+            border-radius: 2px;
+        }
+        section {
+            padding: 100px 0;
+        }
+        .about {
+            background-color: white;
+        }
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+        .about-text {
+            flex: 1;
+        }
+        .about-img {
+            flex: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s ease;
+        }
+        .about-img:hover {
+            transform: scale(1.03);
+        }
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .services {
+            background-color: var(--light);
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.15);
+        }
+        .service-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        .service-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .service-card:hover .service-img img {
+            transform: scale(1.1);
+        }
+        .service-content {
+            padding: 1.5rem;
+        }
+        .service-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        .contact {
+            background: linear-gradient(rgba(41, 41, 41, 0.9), rgba(41, 41, 41, 0.9)), url('https://avatars.mds.yandex.net/get-altay/4464784/2a0000017a3e5c8e5a4d8e3a3f8e3d8e3f8e/XXL') center/cover no-repeat;
+            color: white;
+            text-align: center;
+        }
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.3);
+        }
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .phone-reveal {
+            display: none;
+            background: white;
+            color: var(--dark);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+        .phone-reveal p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .phone-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 2px;
+        }
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            text-align: center;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
+        }
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            margin-bottom: 0.8rem;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer-section a:hover {
+            color: var(--secondary);
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .about-content {
+                flex-direction: column;
+            }
+            .btn {
+                padding: 12px 25px;
+            }
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><div class="logo1"><span>МолГенЛаб</span></div></div>
+                <ul class="nav-links">
+                    <li><a href="#home">Главная</a></li>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#services">Услуги</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Генетическая экспертиза <span>нового поколения</span></h1>
+                <p>Современные ДНК-технологии для установления отцовства, родства и генетической предрасположенности к заболеваниям</p>
+                <div>
+                    <a href="#services" class="btn animate__animated animate__pulse animate__infinite">Наши услуги</a>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>О нашей лаборатории</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Почему выбирают МолГенЛаб?</h3>
+                    <p>Мы — ведущая генетическая лаборатория ЮФО и СКФО в системе судебно-медицинских экспертиз, оснащённая современным российским оборудованием. Наши специалисты имеют более 15 лет опыта в ДНК-анализе.</p>
+                    <p>Используем проверенные методики и реагенты мировых производителей, работаем с 41 аутосомным STR-локусом, 40 STR-локусами Y-хромосомы и 21 STR-локусом X-хромосомы, что соответствует международным стандартам (CODIS, EDNAP, ESS) и требованиям ФБДГИ. Дополнительные STR-маркеры повышают точность в сложных случаях установления отцовства, родства и идентификации личности.<br>Точность наших тестов составляет не менее 99,9999999%.</br></p>
+                    <a href="https://www.ksma.ru/razvitie/centry-kollektivnogo-polzovaniya/molgenlab/" class="btn" style="margin-top: 1rem;">Подробнее</a>
+                </div>
+                <div class="about-img floating">
+                    <img src="/img/Снимокэкрана225-06-08163154(1)" alt="Лаборатория МолГенЛаб">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+    <div class="container">
+        <div class="section-title">
+            <h2>Наши услуги</h2>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-content">
+                    <h3>Установление отцовства</h3>
+                    <p>Точный ДНК-тест для подтверждения биологического родства между отцом и ребенком с точностью 99,9999999%.</p>
+                    <a href="main1.html" class="btn" style="padding: 10px 20px; font-size: 0.9rem;">от 8 788 руб.</a>
+                </div>
+            </div>
+            <div class="service-card">
+                
+                <div class="service-content">
+                    <h3>Генетическая судебная экспертиза</h3>
+                    <p>Сложный многоэтапный процесс анализа ДНК с множеством нюансов, требующих профессиональных знаний, для установления личности по предоставленным биологическим объектам и следам с точностью 99,9999999%</p>
+                    <a href="main.html" class="btn" style="padding: 10px 20px; font-size: 0.9rem;">от 15 001 руб.</a>
+                </div>
+            </div>
+            <div class="service-card">
+            
+                <div class="service-content">
+                    
+                    <h3>Рецензия на генетическую экспертизу</h3>
+                    <p><br>Независимая рецензия выявит ошибки, неточности и поможет понять, были ли они случайными или умышленными.В рамках уголовных дел и гражданского судопроизводства (установление/оспаривание отцовства или материнства)<br><b>от 25000 руб.</b></br></br>
+ 
+
+<br>Консультация по генетической экспертизе/заключению для суда <br><b>от 3000 руб.</b></br></br>
+
+ 
+
+<br>Сопровождение в судебных заседаниях;<br><b>от 15000 руб.</b></br><br>
+ 
+
+<br>Помощь в составлении вопросов выносимых на генетическое экспертное исследование <br><b>от 3000 руб.</b></br></br>
+ 
+</p>
+                    <a href="https://23gen.ru/" class="btn" style="padding: 10px 20px; font-size: 0.9rem;">www.23gen.ru</a>
+                </div>
+            </div>
+            <div class="service-card">
+                
+                <div class="service-content">
+                    <h3>Происхождение по мужской линии</h3>
+                    <p>Позволяет проследить генетическую историю по прямой мужской линии <br>(от прадеда - деда - отцу - сыну - внуку - правнуку) </br></p>
+                    <a href="#" class="btn" style="padding: 10px 20px; font-size: 0.9rem;">11 577 руб.</a>
+                </div>
+            </div>
+            <div class="service-card">
+                
+                <div class="service-content">
+                    <h3>Генетический паспорт</h3>
+                    <p>Комплексный анализ на предрасположенность к наследственным заболеваниям и индивидуальные особенности организма <br></br></p>
+                    <a href="#" class="btn" style="padding: 10px 20px; font-size: 0.9rem;">Cтраница в разработке</a>
+                </div>
+            </div>
+        </div>
+        <div id="phone-section" class="phone-reveal">
+            <p>Наш контактный телефон для консультаций:</p>
+            <div class="phone-number"><b>8 (928) 28-003-99<br>8 (918) 310-77-99</br></b></div>
+            <p>Консультируем без выходных</p>
+        </div>
+
+    </div>
+</section>
+  <section id="contact" class="contact">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>МолГенЛаб</h3>
+                <p>Молекулярно-генетическая лаборатория <br><b>ФГБОУ ВО КубГМУ Минздрава России</b></br></p>
+                <div class="social-links">
+                    <!-- 1. Telegram -->
+                    <a href="https://t.me/Recenziya_of_the_genetic_expert" class="social-icon" title="Telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    
+                    <!-- 2. WhatsApp Business -->
+                    <a href="https://wa.me/79282800399?text=Здравствуйте, у меня вопрос" class="social-icon" title="WhatsApp Business">
+                        <i class="fab fa-whatsapp" style="background-color: #25D366;"></i>
+                    </a>
+                    
+                    <!-- 3. Обычный WhatsApp -->
+                    <a href="https://wa.me/79183107799?text=Здравствуйте, у меня вопрос" class="social-icon" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    
+                    <!-- 4. Иконка для разработчика -->
+                    <a href="https://github.com/Scord735" class="social-icon" title="Разработчик">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Краснодар, Ул. Митрофана Седина, д4</p>
+                <p><i class="fas fa-phone"></i> <a href="tel:+79183107799">8(918)31-077-99</a></p>
+                <p><i class="fas fa-phone"></i> <a href="tel:+79282800399">8(928)28-003-99</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="https://mail.yandex.ru/">rdv.23gen@yandex.ru</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Часы работы</h3>
+                <p>Пн-Пт: 9:00 - 16:00</p>
+                <p>Сб-Вс: Выходной</p>
+                <a href="#phone-section" id="showPhoneBtn" class="btn" style="padding: 10px 15px; margin-top: 10px; display: inline-block;">Показать телефон</a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 23gen.ru. Все права защищены.</p>
+        </div>
+    </div>
+</section>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Показать телефон
+        document.getElementById('showPhoneBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('phone-section').style.display = 'block';
+            window.location.hash = 'phone-section';
+        });
+
+        // Анимация при скролле
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.service-card, .about-img, .section-title');
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                if (elementPosition < screenPosition) {
+                    element.classList.add('animate__animated', 'animate__fadeInUp');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+    </script>
+</body>
+</html>
